@@ -38,7 +38,9 @@ def normalize_data(data):
 
 def corrupt_data(data, perc_corruption=30):
     """
-    Corrupt the data by setting random elements to zero.
+    Corrupt the data by setting random grid points to zero.
+    The grid points are on the latitude, logitude grid 
+    and are selected for each timestep for each channel.
     Works for data in the shape: time, level/channel, latitude, longitude.
 
     Args:
@@ -52,7 +54,7 @@ def corrupt_data(data, perc_corruption=30):
     for t in range(data.shape[0]):  # Iterate over time steps
         for c in range(data.shape[1]):  # Iterate over levels
             lat_indices, lon_indices = np.unravel_index(
-                np.random.choice(data.shape[2] * data.shape[3], perc_corruption * 18 * 91, replace=False),
+                np.random.choice(data.shape[2] * data.shape[3], (perc_corruption * data.shape[2] * data.shape[3]) // 100, replace=False),
                 (data.shape[2], data.shape[3])
             )
             corrupted_data[t, c, lat_indices, lon_indices] = 0
