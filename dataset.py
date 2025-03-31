@@ -15,13 +15,14 @@ def load_netcdf(file_path):
         file_path (str): Path to the netCDF file.
 
     Returns:
-        dataset (netCDF4.Dataset): Loaded netCDF dataset.
+        dataset (np.ndarray): Loaded netCDF dataset made to a numpy file.
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
 
     dataset = nc.Dataset(file_path, 'r')
     print("The variables are as follows:",dataset.variables.keys())
+    dataset = np.array(dataset.variables['z'][:])
     return dataset
 
 def normalize_data(data):
