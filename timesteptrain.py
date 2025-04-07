@@ -1,5 +1,5 @@
 """
-train.py
+timesteptrain.py
 Training script for the Convolutional Variational Autoencoder (ConvVAE).
 """
 
@@ -8,13 +8,13 @@ import numpy as np
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
 from dataset import load_netcdf, normalize_data, corrupt_data
-from denoisemodel import ConvVAE, loss_function
+from timestepmodel import ConditionalConvVAE, loss_function
 
 batch_size = 32
 epochs = 100
 learning_rate = 1e-3
 device = torch.device("mps" if torch.mps.is_available() else "cpu")
-file_path = "./data/z1979.nc"
+file_path = "./data/sample.nc"
 
 X = load_netcdf(file_path)
 Xt1 = X[1:]
@@ -31,7 +31,7 @@ dataset = TensorDataset(X_tensor, Xt1_tensor)
 dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 # Initialize model, optimizer
-model = ConvVAE().to(device)
+model = ConditionalConvVAE().to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 # Training loop
@@ -55,8 +55,8 @@ for epoch in range(epochs):
     print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss / len(dataloader)}")
 
 # Save trained model
-torch.save(model.state_dict(), "vae_model.pth")
-print("Model saved as vae_model.pth")
+torch.save(model.state_dict(), "conditional_vae_model.pth")
+print("Model saved as conditional_vae_model.pth")
 
 
 # Visualization
