@@ -1,25 +1,34 @@
-# VAE for Climate Data Imputation
+# Climate Data Reconstruction and Forecasting with Convolutional VAEs
 
-This repository implements a Convolutional Variational Autoencoder (ConvVAE) for imputing missing climate data from netCDF files.
+This repository contains two deep learning models for working with gridded climate data:
 
-🚀 Features
-Loads netCDF climate data and preprocesses it.
+- **ConvVAE** for imputing missing values in spatial climate data.
+- **ConditionalConvVAE** for forecasting future time steps conditioned on historical input.
 
-Corrupts data artificially to train the model on missing values.
+Both models use convolutional encoders and decoders to capture spatiotemporal dependencies in netCDF climate datasets.
 
-Implements a ConvVAE for reconstructing the missing climate data.
+_____________________________________________________________________________________
 
-Provides a training script for model optimization.
+## 📁 Project Structure
 
-# Repository Structure
-VAE-for-climate-data/
-│── dataset.py         # Functions to load and preprocess netCDF data
-│── denoiseModel.py    # Defines the ConvVAE model
-│── train.py           # Training script
-│── README.md          # Documentation
+├── dataset.py # Functions to load and preprocess netCDF data 
+├── models
+  └── denoisemodel.py # Defines denoisemodel for imputation
+  └── timestepmodel.py # Defines timestepmodel for forecasting 
+├── denoisetrain.py # Training script for denoisemodel 
+├── timesteptrain.py# Training script for timestepmodel 
+├── README.md # This file
+
+
 
 # requirements
-pip3 install torch netCDF4 numpy matplotlib
+- Python
+- PyTorch
+- NumPy
+- netCDF4
+- matplotlib
 
 # Train the model
-python3 train.py
+python3 denoisetrain.py #for imputation model
+
+python3 timesteptrain.py #for forecasting model
