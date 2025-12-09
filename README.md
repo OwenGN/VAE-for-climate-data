@@ -9,7 +9,7 @@ Both models use convolutional encoders and decoders to capture spatiotemporal de
 
 _____________________________________________________________________________________
 
-## 📁 Project Structure
+## Project Structure
 
 ├── dataset.py # Functions to load and preprocess netCDF data 
 ├── models
